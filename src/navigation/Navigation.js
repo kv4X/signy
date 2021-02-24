@@ -24,6 +24,6 @@ const AuthNavigator = () => (
 
 export const AppNavigator = () => (
   <NavigationContainer>
-    <MainNavigator/>
+    <AuthNavigator/>
   </NavigationContainer>
 );
