@@ -14,11 +14,17 @@ export const LearningSectionScreen = ({ navigation }) => {
   const renderHomeAction = () => (
     <TopNavigationAction icon={MenuIcon}/>
   );
+<<<<<<< HEAD
 
   const CourseItemHeader = (props) => (
     console.log(props),
     <View style={{backgroundColor: 'transparent', paddingHorizontal: 24, paddingVertical: 16}}>
       <Text category='h5'>{props.name}</Text>
+=======
+  const Header = (props) => (
+    <View {...props}>
+      <Text category='h5'>Letter {props.slovo}</Text>
+>>>>>>> c6e498441b0800e8ceff0ac584c52b2813addbfb
       <Text category='s1'>Open for interactive course</Text>
     </View>
   );
@@ -45,8 +51,297 @@ export const LearningSectionScreen = ({ navigation }) => {
       />
       <Divider/>
       <ScrollView style={styles.scrollView}>
+<<<<<<< HEAD
         <CourseItem name="Letter (A)" imageUrl="https://i.imgur.com/ZljNPkv.png"/>
         <CourseItem name="Letter (B)" imageUrl="https://i.imgur.com/ZljNPkv.png"/>
+=======
+      <View style={{flex:1, flexDirection:"row",maxHeight:100,marginBottom: 5, marginTop: 5}}>
+      <Card style={styles.card}>
+          <Header slovo={'A'} />
+            <View style={{ marginHorizontal: -24, marginVertical: -16 ,width: 100, height:100}}>
+                <Image  source={{
+            uri: 'https://i.imgur.com/ZljNPkv.png',
+          }} style={styles.cover}/>
+            </View>
+            
+        </Card>
+      </View>
+      <View style={{flex:1, flexDirection:"row",maxHeight:100,marginBottom: 5, marginTop: 5}}>
+      <Card style={styles.card}>
+          <Header slovo={'B'} />
+            <View style={{ marginHorizontal: -24, marginVertical: -16 ,width: 100, height:100}}>
+                <Image  source={{
+            uri: 'https://i.imgur.com/ZljNPkv.png',
+          }} style={styles.cover}/>
+            </View>
+            
+        </Card>
+      </View>
+      <View style={{flex:1, flexDirection:"row",maxHeight:100,marginBottom: 5, marginTop: 5}}>
+      <Card style={styles.card}>
+          <Header slovo={'C'} />
+            <View style={{ marginHorizontal: -24, marginVertical: -16 ,width: 100, height:100}}>
+                <Image  source={{
+            uri: 'https://i.imgur.com/ZljNPkv.png',
+          }} style={styles.cover}/>
+            </View>
+            
+        </Card>
+      </View>
+      <View style={{flex:1, flexDirection:"row",maxHeight:100,marginBottom: 5, marginTop: 5}}>
+      <Card style={styles.card}>
+          <Header slovo={'D'} />
+            <View style={{ marginHorizontal: -24, marginVertical: -16 ,width: 100, height:100}}>
+                <Image  source={{
+            uri: 'https://i.imgur.com/ZljNPkv.png',
+          }} style={styles.cover}/>
+            </View>
+            
+        </Card>
+      </View>
+      <View style={{flex:1, flexDirection:"row",maxHeight:100,marginBottom: 5, marginTop: 5}}>
+      <Card style={styles.card}>
+          <Header slovo={'E'} />
+            <View style={{ marginHorizontal: -24, marginVertical: -16 ,width: 100, height:100}}>
+                <Image  source={{
+            uri: 'https://i.imgur.com/ZljNPkv.png',
+          }} style={styles.cover}/>
+            </View>
+            
+        </Card>
+      </View>
+      <View style={{flex:1, flexDirection:"row",maxHeight:100,marginBottom: 5, marginTop: 5}}>
+      <Card style={styles.card}>
+          <Header slovo={'F'} />
+            <View style={{ marginHorizontal: -24, marginVertical: -16 ,width: 100, height:100}}>
+                <Image  source={{
+            uri: 'https://i.imgur.com/ZljNPkv.png',
+          }} style={styles.cover}/>
+            </View>
+            
+        </Card>
+      </View>
+      <View style={{flex:1, flexDirection:"row",maxHeight:100,marginBottom: 5, marginTop: 5}}>
+      <Card style={styles.card}>
+          <Header slovo={'G'} />
+            <View style={{ marginHorizontal: -24, marginVertical: -16 ,width: 100, height:100}}>
+                <Image  source={{
+            uri: 'https://i.imgur.com/ZljNPkv.png',
+          }} style={styles.cover}/>
+            </View>
+            
+        </Card>
+      </View>
+      <View style={{flex:1, flexDirection:"row",maxHeight:100,marginBottom: 5, marginTop: 5}}>
+      <Card style={styles.card}>
+          <Header slovo={'H'} />
+            <View style={{ marginHorizontal: -24, marginVertical: -16 ,width: 100, height:100}}>
+                <Image  source={{
+            uri: 'https://i.imgur.com/ZljNPkv.png',
+          }} style={styles.cover}/>
+            </View>
+            
+        </Card>
+      </View>
+      <View style={{flex:1, flexDirection:"row",maxHeight:100,marginBottom: 5, marginTop: 5}}>
+      <Card style={styles.card}>
+          <Header slovo={'I'} />
+            <View style={{ marginHorizontal: -24, marginVertical: -16 ,width: 100, height:100}}>
+                <Image  source={{
+            uri: 'https://i.imgur.com/ZljNPkv.png',
+          }} style={styles.cover}/>
+            </View>
+            
+        </Card>
+      </View>
+      <View style={{flex:1, flexDirection:"row",maxHeight:100,marginBottom: 5, marginTop: 5}}>
+      <Card style={styles.card}>
+          <Header slovo={'J'} />
+            <View style={{ marginHorizontal: -24, marginVertical: -16 ,width: 100, height:100}}>
+                <Image  source={{
+            uri: 'https://i.imgur.com/ZljNPkv.png',
+          }} style={styles.cover}/>
+            </View>
+            
+        </Card>
+      </View>
+      <View style={{flex:1, flexDirection:"row",maxHeight:100,marginBottom: 5, marginTop: 5}}>
+      <Card style={styles.card}>
+          <Header slovo={'K'} />
+            <View style={{ marginHorizontal: -24, marginVertical: -16 ,width: 100, height:100}}>
+                <Image  source={{
+            uri: 'https://i.imgur.com/ZljNPkv.png',
+          }} style={styles.cover}/>
+            </View>
+            
+        </Card>
+      </View>
+      <View style={{flex:1, flexDirection:"row",maxHeight:100,marginBottom: 5, marginTop: 5}}>
+      <Card style={styles.card}>
+          <Header slovo={'L'} />
+            <View style={{ marginHorizontal: -24, marginVertical: -16 ,width: 100, height:100}}>
+                <Image  source={{
+            uri: 'https://i.imgur.com/ZljNPkv.png',
+          }} style={styles.cover}/>
+            </View>
+            
+        </Card>
+      </View>
+      <View style={{flex:1, flexDirection:"row",maxHeight:100,marginBottom: 5, marginTop: 5}}>
+      <Card style={styles.card}>
+          <Header slovo={'M'} />
+            <View style={{ marginHorizontal: -24, marginVertical: -16 ,width: 100, height:100}}>
+                <Image  source={{
+            uri: 'https://i.imgur.com/ZljNPkv.png',
+          }} style={styles.cover}/>
+            </View>
+            
+        </Card>
+      </View>
+      <View style={{flex:1, flexDirection:"row",maxHeight:100,marginBottom: 5, marginTop: 5}}>
+      <Card style={styles.card}>
+          <Header slovo={'N'} />
+            <View style={{ marginHorizontal: -24, marginVertical: -16 ,width: 100, height:100}}>
+                <Image  source={{
+            uri: 'https://i.imgur.com/ZljNPkv.png',
+          }} style={styles.cover}/>
+            </View>
+            
+        </Card>
+      </View>
+      <View style={{flex:1, flexDirection:"row",maxHeight:100,marginBottom: 5, marginTop: 5}}>
+      <Card style={styles.card}>
+          <Header slovo={'O'} />
+            <View style={{ marginHorizontal: -24, marginVertical: -16 ,width: 100, height:100}}>
+                <Image  source={{
+            uri: 'https://i.imgur.com/ZljNPkv.png',
+          }} style={styles.cover}/>
+            </View>
+            
+        </Card>
+      </View>
+      <View style={{flex:1, flexDirection:"row",maxHeight:100,marginBottom: 5, marginTop: 5}}>
+      <Card style={styles.card}>
+          <Header slovo={'P'} />
+            <View style={{ marginHorizontal: -24, marginVertical: -16 ,width: 100, height:100}}>
+                <Image  source={{
+            uri: 'https://i.imgur.com/ZljNPkv.png',
+          }} style={styles.cover}/>
+            </View>
+            
+        </Card>
+      </View>
+      <View style={{flex:1, flexDirection:"row",maxHeight:100,marginBottom: 5, marginTop: 5}}>
+      <Card style={styles.card}>
+          <Header slovo={'Q'} />
+            <View style={{ marginHorizontal: -24, marginVertical: -16 ,width: 100, height:100}}>
+                <Image  source={{
+            uri: 'https://i.imgur.com/ZljNPkv.png',
+          }} style={styles.cover}/>
+            </View>
+            
+        </Card>
+      </View>
+      <View style={{flex:1, flexDirection:"row",maxHeight:100,marginBottom: 5, marginTop: 5}}>
+      <Card style={styles.card}>
+          <Header slovo={'R'} />
+            <View style={{ marginHorizontal: -24, marginVertical: -16 ,width: 100, height:100}}>
+                <Image  source={{
+            uri: 'https://i.imgur.com/ZljNPkv.png',
+          }} style={styles.cover}/>
+            </View>
+            
+        </Card>
+      </View>
+      <View style={{flex:1, flexDirection:"row",maxHeight:100,marginBottom: 5, marginTop: 5}}>
+      <Card style={styles.card}>
+          <Header slovo={'S'} />
+            <View style={{ marginHorizontal: -24, marginVertical: -16 ,width: 100, height:100}}>
+                <Image  source={{
+            uri: 'https://i.imgur.com/ZljNPkv.png',
+          }} style={styles.cover}/>
+            </View>
+            
+        </Card>
+      </View>
+      <View style={{flex:1, flexDirection:"row",maxHeight:100,marginBottom: 5, marginTop: 5}}>
+      <Card style={styles.card}>
+          <Header slovo={'T'} />
+            <View style={{ marginHorizontal: -24, marginVertical: -16 ,width: 100, height:100}}>
+                <Image  source={{
+            uri: 'https://i.imgur.com/ZljNPkv.png',
+          }} style={styles.cover}/>
+            </View>
+            
+        </Card>
+      </View>
+      <View style={{flex:1, flexDirection:"row",maxHeight:100,marginBottom: 5, marginTop: 5}}>
+      <Card style={styles.card}>
+          <Header slovo={'U'} />
+            <View style={{ marginHorizontal: -24, marginVertical: -16 ,width: 100, height:100}}>
+                <Image  source={{
+            uri: 'https://i.imgur.com/ZljNPkv.png',
+          }} style={styles.cover}/>
+            </View>
+            
+        </Card>
+      </View>
+      <View style={{flex:1, flexDirection:"row",maxHeight:100,marginBottom: 5, marginTop: 5}}>
+      <Card style={styles.card}>
+          <Header slovo={'V'} />
+            <View style={{ marginHorizontal: -24, marginVertical: -16 ,width: 100, height:100}}>
+                <Image  source={{
+            uri: 'https://i.imgur.com/ZljNPkv.png',
+          }} style={styles.cover}/>
+            </View>
+            
+        </Card>
+      </View>
+      <View style={{flex:1, flexDirection:"row",maxHeight:100,marginBottom: 5, marginTop: 5}}>
+      <Card style={styles.card}>
+          <Header slovo={'W'} />
+            <View style={{ marginHorizontal: -24, marginVertical: -16 ,width: 100, height:100}}>
+                <Image  source={{
+            uri: 'https://i.imgur.com/ZljNPkv.png',
+          }} style={styles.cover}/>
+            </View>
+            
+        </Card>
+      </View>
+      <View style={{flex:1, flexDirection:"row",maxHeight:100,marginBottom: 5, marginTop: 5}}>
+      <Card style={styles.card}>
+          <Header slovo={'X'} />
+            <View style={{ marginHorizontal: -24, marginVertical: -16 ,width: 100, height:100}}>
+                <Image  source={{
+            uri: 'https://i.imgur.com/ZljNPkv.png',
+          }} style={styles.cover}/>
+            </View>
+            
+        </Card>
+      </View>
+      <View style={{flex:1, flexDirection:"row",maxHeight:100,marginBottom: 5, marginTop: 5}}>
+      <Card style={styles.card}>
+          <Header slovo={'Y'} />
+            <View style={{ marginHorizontal: -24, marginVertical: -16 ,width: 100, height:100}}>
+                <Image  source={{
+            uri: 'https://i.imgur.com/ZljNPkv.png',
+          }} style={styles.cover}/>
+            </View>
+            
+        </Card>
+      </View>
+      <View style={{flex:1, flexDirection:"row",maxHeight:100,marginBottom: 5, marginTop: 5}}>
+      <Card style={styles.card}>
+          <Header slovo={'Z'} />
+            <View style={{ marginHorizontal: -24, marginVertical: -16 ,width: 100, height:100}}>
+                <Image  source={{
+            uri: 'https://i.imgur.com/ZljNPkv.png',
+          }} style={styles.cover}/>
+            </View>
+            
+        </Card>
+      </View>
+>>>>>>> c6e498441b0800e8ceff0ac584c52b2813addbfb
       </ScrollView>
     </SafeAreaView>
   );
@@ -66,8 +361,8 @@ const styles = StyleSheet.create({
     },
     cover: {
         position:'absolute',
-        top:0,
-        left: 40,
+        top:-50,
+        left: 270,
         width: 100,
         height: 100,
     },
