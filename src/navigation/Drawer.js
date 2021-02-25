@@ -6,6 +6,7 @@ import { useTheme, Toggle, Divider, Drawer, DrawerItem, Layout, Text, IndexPath 
 import { HomeScreen } from '../screens/HomeScreen';
 const { Navigator, Screen } = createDrawerNavigator();
 import { ThemeProvider, ThemeContext } from '../providers/ThemeProvider';
+import { LearningSectionScreen } from '../screens/LearningSectionScreen';
 
 const renderHeader = () => (
     <Layout style={styles.header} level='2'>
@@ -48,14 +49,14 @@ const DrawerContent = ({ navigation, state }) => (
     footer={renderFooter}
     >
     <DrawerItem title='Početna' />
-    <DrawerItem title='Kontakt' />
+    <DrawerItem title='Learning Section' />
   </Drawer>
 );
 
 export const DrawerNavigator = () => (
   <Navigator drawerContent={props => <DrawerContent {...props}/>}>
     <Screen name='Home' component={HomeScreen}/>
-    <Screen name='Contact' component={HomeScreen}/>
+    <Screen name='Learning Section' component={LearningSectionScreen}/>
   </Navigator>
 );
 

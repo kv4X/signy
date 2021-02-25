@@ -11,6 +11,7 @@ const MainNavigator = () => (
   <Navigator headerMode='none'>
     {/*<Screen name='SignIn' component={DrawerNavigator}/>*/}
     <Screen name='Home' component={DrawerNavigator}/>
+    <Screen name='LearningSectionScreen' component={DrawerNavigator}/>
   </Navigator>
 );
 
