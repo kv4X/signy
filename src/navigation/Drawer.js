@@ -8,15 +8,15 @@ const { Navigator, Screen } = createDrawerNavigator();
 import { ThemeProvider, ThemeContext } from '../providers/ThemeProvider';
 import { LearningSectionScreen } from '../screens/LearningSectionScreen';
 import { LetterScreen } from '../screens/LetterScreen';
-
+import { SettingsScreen } from '../screens/SettingsScreen';
 
 const renderHeader = () => (
     <Layout style={styles.header} level='2'>
       <View style={styles.profileContainer}>
-         <Image
-            style={{resizeMode: 'stretch', width: 100, height: 100}}
-            source={{uri: 'https://i.imgur.com/ZljNPkv.png'}}
-          />
+        <Image
+          style={{resizeMode: 'stretch', width: 100, height: 100}}
+          source={{uri: 'https://i.imgur.com/ZljNPkv.png'}}
+        />
       </View>
     </Layout>
 );
@@ -37,7 +37,7 @@ const renderFooter = (props) => {
           checked={activeChecked}
           onChange={onActiveCheckedChange}
         >
-          Tamna tema
+          Dark theme
         </Toggle>
       </Layout>
   );
@@ -50,9 +50,10 @@ const DrawerContent = ({ navigation, state }) => (
     header={renderHeader}
     footer={renderFooter}
     >
-    <DrawerItem title='Početna' />
+    <DrawerItem title='Home' />
     <DrawerItem title='Learning Section' />
     <DrawerItem title='Letter Section' />
+    <DrawerItem title='Settings' />
   </Drawer>
 );
 
@@ -61,6 +62,7 @@ export const DrawerNavigator = () => (
     <Screen name='Home' component={HomeScreen}/>
     <Screen name='Learning Section' component={LearningSectionScreen}/>
     <Screen name='Letter Section' component={LetterScreen}/>
+    <Screen name='Settings' component={SettingsScreen}/>
   </Navigator>
 );
 
