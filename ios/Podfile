@@ -8,6 +8,8 @@ target 'signydev' do
 
   use_react_native!(:path => config["reactNativePath"])
 
+  pod 'react-native-voice', :path => '../node_modules/react-native-voice'
+
   target 'signydevTests' do
     inherit! :complete
     # Pods for testing

@@ -9,6 +9,7 @@ import { ThemeProvider, ThemeContext } from '../providers/ThemeProvider';
 import { LearningSectionScreen } from '../screens/LearningSectionScreen';
 import { LetterScreen } from '../screens/LetterScreen';
 import { SettingsScreen } from '../screens/SettingsScreen';
+import { SpeechToTextScreen } from '../screens/SpeechToTextScreen';
 
 const renderHeader = () => (
     <Layout style={styles.header} level='2'>
@@ -52,6 +53,7 @@ const DrawerContent = ({ navigation, state }) => (
     >
     <DrawerItem title='Home' />
     <DrawerItem title='Learning Section' />
+    <DrawerItem title='Speech to ASL converter' />
     <DrawerItem title='Letter Section' />
     <DrawerItem title='Settings' />
   </Drawer>
@@ -61,6 +63,7 @@ export const DrawerNavigator = () => (
   <Navigator drawerContent={props => <DrawerContent {...props}/>}>
     <Screen name='Home' component={HomeScreen}/>
     <Screen name='Learning Section' component={LearningSectionScreen}/>
+    <Screen name="SpeechtoTextScreen" component={SpeechToTextScreen}/>
     <Screen name='Letter Section' component={LetterScreen}/>
     <Screen name='Settings' component={SettingsScreen}/>
   </Navigator>
