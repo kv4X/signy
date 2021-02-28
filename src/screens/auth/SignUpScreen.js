@@ -61,7 +61,7 @@ export const SignUpScreen = ({ navigation }) => {
 
   async function loginHandler(){
     try{
-      setLoading(false);
+      setLoading(true);
       let response =  await api.register(
         {
           fullname: fullname,
