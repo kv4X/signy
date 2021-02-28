@@ -1,103 +1,71 @@
 import React, {useState, useEffect, Component} from 'react';
-import { StatusBar, ImageBackground, SafeAreaView, View, Image, StyleSheet,TouchableOpacity } from 'react-native';
+import { StatusBar, ImageBackground, SafeAreaView, View, Image, StyleSheet,TouchableHighlight, ScrollView } from 'react-native';
 import { NavigationContainer, DrawerActions } from '@react-navigation/native';
 import { Button, Text, TopNavigationAction, Divider, Icon, Card, Layout, TopNavigation, useTheme, Menu, MenuItem } from '@ui-kitten/components';
 import Svg, { SvgText, Path } from 'react-native-svg';
 import Voice from 'react-native-voice';
-export default class VoiceTest extends Component {
-  state = {
-    recognized: '',
-    pitch: '',
-    error: '',
-    end: '',
-    started: false,
-    results: [],
-    partialResults: [],
+
+export const SpeechToTextScreen = ({ navigation }) => {
+  const [pitch, setPitch] = useState('');
+  const [error, setError] = useState('');
+  const [end, setEnd] = useState('');
+  const [started, setStarted] = useState('');
+  const [results, setResults] = useState([]);
+  const [partialResults, setPartialResults] = useState([]);
+
+  useEffect(() => {
+    Voice.onSpeechStart = onSpeechStart;
+    Voice.onSpeechEnd = onSpeechEnd;
+    Voice.onSpeechError = onSpeechError;
+    Voice.onSpeechResults = onSpeechResults;
+    Voice.onSpeechPartialResults = onSpeechPartialResults;
+    Voice.onSpeechVolumeChanged = onSpeechVolumeChanged;
+
+    return () => {
+      Voice.destroy().then(Voice.removeAllListeners);
+    };
+  }, []);
+
+  const onSpeechStart = (e) => {
+    setStarted('√');
   };
 
-  constructor() {
-    super();
-    Voice.onSpeechStart = this.onSpeechStart;
-    Voice.onSpeechRecognized = this.onSpeechRecognized;
-    Voice.onSpeechEnd = this.onSpeechEnd;
-    Voice.onSpeechError = this.onSpeechError;
-    Voice.onSpeechResults = this.onSpeechResults;
-    Voice.onSpeechPartialResults = this.onSpeechPartialResults;
-    Voice.onSpeechVolumeChanged = this.onSpeechVolumeChanged;
-  }
-
-  componentWillUnmount() {
-    Voice.destroy().then(Voice.removeAllListeners);
-  }
-
-  onSpeechStart = (e) => {
-    console.log('onSpeechStart: ', e);
-    this.setState({
-      started: true,
-    });
+  const onSpeechEnd = (e) => {
+    setEnd('√');
   };
 
-  onSpeechRecognized = (e) => {
-    console.log('onSpeechRecognized: ', e);
-    this.setState({
-      recognized: '√',
-    });
-  };
-
-  onSpeechEnd = (e) => {
-    console.log('onSpeechEnd: ', e);
-    this.setState({
-      end: '√',
-    });
-  };
-
-  onSpeechError = (e) => {
+  const onSpeechError = (e) => {
     console.log('onSpeechError: ', e);
-    this.setState({
-      error: JSON.stringify(e.error),
-    });
+    setError(JSON.stringify(e.error));
   };
 
-  onSpeechResults = (e) => {
-    console.log('onSpeechResults: ', e);
-    this.setState({
-      results: e.value,
-    });
+  const onSpeechResults = (e) => {
+    setResults(e.value);
   };
 
-  onSpeechPartialResults = (e) => {
-    console.log('onSpeechPartialResults: ', e);
-    this.setState({
-      partialResults: e.value,
-    });
+  const onSpeechPartialResults = (e) => {
+    setPartialResults(e.value);
   };
 
-  onSpeechVolumeChanged = (e) => {
-    console.log('onSpeechVolumeChanged: ', e);
-    this.setState({
-      pitch: e.value,
-    });
+  const onSpeechVolumeChanged = (e) => {
+    setPitch(e.value);
   };
 
-  _startRecognizing = async () => {
-    this.setState({
-      recognized: '',
-      pitch: '',
-      error: '',
-      started: '',
-      results: [],
-      partialResults: [],
-      end: '',
-    });
-
+  const startRecognizing = async () => {
     try {
       await Voice.start('en-US');
+      setPitch('');
+      setError('');
+      setStarted('');
+      setResults([]);
+      setPartialResults([]);
+      setEnd('');
     } catch (e) {
       console.error(e);
     }
   };
 
-  _stopRecognizing = async () => {
+  const stopRecognizing = async () => {
     try {
       await Voice.stop();
     } catch (e) {
@@ -105,7 +73,7 @@ export default class VoiceTest extends Component {
     }
   };
 
-  _cancelRecognizing = async () => {
+  const cancelRecognizing = async () => {
     try {
       await Voice.cancel();
     } catch (e) {
@@ -113,27 +81,21 @@ export default class VoiceTest extends Component {
     }
   };
 
-  _destroyRecognizer = async () => {
+  const destroyRecognizer = async () => {
     try {
       await Voice.destroy();
-    } catch (e) {
+      setPitch('');
+      setError('');
+      setStarted('');
+      setResults([]);
+      setPartialResults([]);
+      setEnd('');
+    } 
+    catch (e) {
+      //eslint-disable-next-line
       console.error(e);
     }
-    this.setState({
-      recognized: '',
-      pitch: '',
-      error: '',
-      started: '',
-      results: [],
-      partialResults: [],
-      end: '',
-    });
   };
-}
-
-
-export const SpeechToTextScreen = ({ navigation }) => {
-  const p = new VoiceTest();
   const colors = useTheme();
 
   const MenuIcon = (props) => (
@@ -144,23 +106,6 @@ export const SpeechToTextScreen = ({ navigation }) => {
     <TopNavigationAction icon={MenuIcon}/>
   );
 
-  const CourseItemHeader = (props) => (
-    console.log(props),
-    <View style={{backgroundColor: 'transparent', paddingHorizontal: 24, paddingVertical: 16}}>
-      <Text category='h5'>{props.name}</Text>
-      <Text category='s1'>Press to start audio recording</Text>
-    </View>
-  );
-  
-  const CourseItem = (props) => (
-    <View style={{flex:1, flexDirection:"row",maxHeight:100,marginBottom: 5, marginTop: 5}}>
-      <Card style={styles.card} header={propsa => <CourseItemHeader name={props.name}/>}>
-        <View style={{ marginHorizontal: -24, marginVertical: -16 ,width: 100, height:100}}>
-          <Image  source={{uri: props.imageUrl}} style={styles.cover}/>
-        </View>
-      </Card> 
-    </View>
-  );
   const ForwardIcon = (props) => (
     <Icon {...props} name='arrow-ios-forward'/>
   );
@@ -176,21 +121,55 @@ export const SpeechToTextScreen = ({ navigation }) => {
         title={props => <Text style={{color: colors['background-basic-color-1'], textTransform: "uppercase"}}>Speech to ASL converter</Text>}
         style={{ position: 'absolute', backgroundColor: 'transparent', textTransform: 'uppercase' }}
       />
-      <Layout style={{flex: 1, margin: 15,justifyContent: 'center', alignItems: 'center'}}>
-        <View style={{alignSelf: 'stretch',height:300,justifyContent: 'center', alignItems: 'center'}}>
-        <Image
-          style={{resizeMode: 'stretch', width: 200, height: 200,position:'absolute', top:0}}
-          source={{
-            uri: 'https://i.imgur.com/ZljNPkv.png',
-          }} />
-          <Text style={{position:'absolute', top:210}}>Press to replay animation</Text>
+      <Layout style={{flex: 1, marginTop:5,marginHorizontal:15,justifyContent: 'center', alignItems: 'center'}}>
+        <View style={{ alignSelf:'stretch', height: 250,justifyContent: 'center', alignItems: 'center', backgroundColor:'#191919'}}>
+          <Image
+            style={{resizeMode: 'stretch', width: 200, height: 200, position:'absolute', top:10}}
+            source={{
+              uri: 'https://i.imgur.com/ZljNPkv.png',
+            }}
+          />
+          <Text style={{position:'absolute', top:220,
+    textAlign: 'center',
+    fontWeight: 'bold'}}>
+            Press on icon to restart animation
+          </Text>
         </View>
-        <TouchableOpacity
-        style={styles.button}
-        onPress={p._startRecognizing.bind()}
-      >
-        <Text>Press Here</Text>
-      </TouchableOpacity>
+      
+      <View style={styles.container}>
+        <Text style={{   fontSize: 22,
+    textAlign: 'center',
+    fontWeight: 'bold',}}>
+          Results
+        </Text>
+        <ScrollView style={{marginBottom: 42}}>
+          {results.map((result, index) => {
+            return (
+              <Text
+                key={`result-${index}`}
+                style={styles.textStyle}>
+                {result}
+              </Text>
+            );
+          })}
+        </ScrollView>
+        <View style={styles.horizontalView}>
+          <TouchableHighlight
+            onPress={startRecognizing}
+            style={styles.buttonStyle}>
+            <Text style={styles.buttonTextStyle}>
+              Start
+            </Text>
+          </TouchableHighlight>
+          <TouchableHighlight
+            onPress={destroyRecognizer}
+            style={styles.buttonStyle}>
+            <Text style={styles.buttonTextStyle}>
+              Clear
+            </Text>
+          </TouchableHighlight>
+        </View>
+      </View>
       </Layout>
       <Layout style={{ flex: 0.5, justifyContent: 'center', alignItems: 'center'}}>
         <Svg width="400" height="300" xmlns="http://www.w3.org/2000/svg" viewBox="-120 -30 600 400">
@@ -203,26 +182,28 @@ export const SpeechToTextScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    minHeight: 192,
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    padding: 5,
   },
-  backdrop: {
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  buttonStyle: {
+    flex: 1,
+    justifyContent: 'center',
+    marginTop: 15,
+    padding: 10,
+    backgroundColor: '#121212',
+    marginRight: 2,
+    marginLeft: 2,
   },
-  card: {
-    width: '100%',
-    display: 'flex',
+  buttonTextStyle: {
+    color: '#fff',
+    textAlign: 'center',
+  },
+  horizontalView: {
     flexDirection: 'row',
-},
-cover: {
-  position:'absolute',
-  top:0,
-  left: 20,
-  width: 100,
-  height: 100,
-},
-button: {
-  alignItems: "center",
-  backgroundColor: "#DDDDDD",
-  padding: 10
-}
+    position: 'absolute',
+    bottom: 0,
+  },
+
 });
