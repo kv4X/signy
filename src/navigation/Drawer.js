@@ -10,6 +10,7 @@ import { LearningSectionScreen } from '../screens/LearningSectionScreen';
 import { LetterScreen } from '../screens/LetterScreen';
 import { SettingsScreen } from '../screens/SettingsScreen';
 import { SpeechToTextScreen } from '../screens/SpeechToTextScreen';
+import { TextToASL } from '../screens/TextToASL';
 
 const renderHeader = () => (
     <Layout style={styles.header} level='2'>
@@ -54,6 +55,7 @@ const DrawerContent = ({ navigation, state }) => (
     <DrawerItem title='Home' />
     <DrawerItem title='Learning Section' />
     <DrawerItem title='Speech to ASL converter' />
+    <DrawerItem title='Text to ASL converter' />
     <DrawerItem title='Letter Section' />
     <DrawerItem title='Settings' />
   </Drawer>
@@ -64,6 +66,7 @@ export const DrawerNavigator = () => (
     <Screen name='Home' component={HomeScreen}/>
     <Screen name='Learning Section' component={LearningSectionScreen}/>
     <Screen name="SpeechtoTextScreen" component={SpeechToTextScreen}/>
+    <Screen name="TextToASL" component={TextToASL}/>
     <Screen name='Letter Section' component={LetterScreen}/>
     <Screen name='Settings' component={SettingsScreen}/>
   </Navigator>
