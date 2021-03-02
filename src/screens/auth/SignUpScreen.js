@@ -61,6 +61,10 @@ export const SignUpScreen = ({ navigation }) => {
 
   async function loginHandler(){
     try{
+      setFullnameCaption('');
+      setEmailCaption('');
+      setPasswordCaption('');
+      setGenderCaption('');
       setLoading(true);
       let response =  await api.register(
         {
@@ -73,15 +77,20 @@ export const SignUpScreen = ({ navigation }) => {
         }
       );
       if(response.message == "USER_CREATED"){
-        console.log("regan");
         Toast.show({
           type: 'success',
           text1: 'Registration Complete',
           text2: 'You have successfully registered.',
           visibilityTime: 5000,
         });
+      }else if(response.message == "EMAIL_TAKEN"){
+        Toast.show({
+          type: 'error',
+          text1: 'Registration error',
+          text2: 'Email is already in use.',
+          visibilityTime: 5000,
+        });
       }else{
-        console.log("f");
         Toast.show({
           type: 'error',
           text1: 'Registration error',
@@ -145,7 +154,7 @@ export const SignUpScreen = ({ navigation }) => {
             onSelect={index => setSelectedIndex(index)}
             captionIcon={genderCaption.length ? AlertIcon: null}
             caption={genderCaption.length ? genderCaption: null}
-          //  value={selectedIndex.row == 0 ? "Male" : "Female"}
+            value={selectedIndex.row == 0 ? "Male" : "Female"}
           >
             <SelectItem title={evaProps => <Text {...evaProps}>Male</Text>} />
             <SelectItem title={evaProps => <Text {...evaProps}>Female</Text>} />

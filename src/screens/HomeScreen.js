@@ -3,10 +3,12 @@ import { StatusBar, ImageBackground, SafeAreaView, View, Image, StyleSheet } fro
 import { NavigationContainer, DrawerActions } from '@react-navigation/native';
 import { Card, Text, TopNavigationAction, Button, Divider, Icon, Layout, TopNavigation, useTheme } from '@ui-kitten/components';
 import Svg, { SvgText, Path } from 'react-native-svg';
+import { useAuth } from "../providers/AuthProvider";
 
 export const HomeScreen = ({ navigation }) => {
   const colors = useTheme();
-
+  const {state, handleLogout} = useAuth();
+  
   const MenuIcon = (props) => (
     <Icon style={{height: 24, width: 24, tintColor: colors['background-basic-color-1']}} name='menu-outline' onPress={() => navigation.dispatch(DrawerActions.openDrawer())} />
   );
@@ -28,7 +30,10 @@ export const HomeScreen = ({ navigation }) => {
       />
       <Divider/>
       <Layout level='3' style={{flex: 1, alignItems: 'center' }}>
-        <Text>Test gg</Text>
+        <Text>Pozdrav, {state.user.email}</Text>
+        <Button style={{ marginTop: 10, width: '100%'}} status='primary' onPress={handleLogout}>
+          Logout test
+        </Button>
       </Layout>
     </SafeAreaView>
   );

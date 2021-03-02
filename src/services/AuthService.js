@@ -21,7 +21,6 @@ export async function login(data){
 
 export function handler(err) {
   let error = err;
-  console.log(error);
   if (err.response && err.response.data.hasOwnProperty("message"))
     error = err.response.data;
   else if (!err.hasOwnProperty("message")) error = err.toJSON();

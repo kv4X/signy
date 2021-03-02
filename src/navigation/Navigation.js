@@ -7,9 +7,11 @@ import { SignUpScreen } from '../screens/auth/SignUpScreen';
 import { ChangePasswordScreen } from '../screens/ChangePasswordScreen';
 import { SpeechToTextScreen } from '../screens/SpeechToTextScreen';
 const { Navigator, Screen } = createStackNavigator();
+import AuthProvider from "../providers/AuthProvider";
+import { useAuth } from "../providers/AuthProvider";
 
-const MainNavigator = () => (
-  <Navigator headerMode='none'>
+export const MainNavigator = () => (
+  <Navigator headerMode='none' initialRouteName="Home">
     {/*<Screen name='SignIn' component={DrawerNavigator}/>*/}
     <Screen name='Home' component={DrawerNavigator}/>
     <Screen name='LearningSectionScreen' component={DrawerNavigator}/>
@@ -19,16 +21,21 @@ const MainNavigator = () => (
   </Navigator>
 );
 
-const AuthNavigator = () => (
-  <Navigator headerMode='none'>
+export const AuthNavigator = () => (
+  <Navigator headerMode='none' initialRouteName="SignIn">
     {/*<Screen name='SignIn' component={DrawerNavigator}/>*/}
     <Screen name='SignIn' component={SigninScreen}/>
     <Screen name='SignUp' component={SignUpScreen}/>
   </Navigator>
 );
 
-export const AppNavigator = () => (
-  <NavigationContainer>
-    <MainNavigator/>
-  </NavigationContainer>
-);
+export const AppNavigator = () => {
+  const {state, handleLogout} = useAuth();
+  const user = state;
+  console.log(user);
+  return (
+    <NavigationContainer>
+      {user.isLoggedIn ? <MainNavigator/>: <AuthNavigator/>}
+    </NavigationContainer>
+  );
+};

@@ -4,6 +4,7 @@ import { NavigationContainer, DrawerActions } from '@react-navigation/native';
 import { Button, Text, TopNavigationAction, Divider, Icon, Card, Layout, TopNavigation, useTheme, Menu, MenuItem } from '@ui-kitten/components';
 import Svg, { SvgText, Path } from 'react-native-svg';
 import Voice from 'react-native-voice';
+//import Voice from '@react-native-voice/voice';
 
 export const SpeechToTextScreen = ({ navigation }) => {
   const [pitch, setPitch] = useState('');

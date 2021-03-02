@@ -1,8 +1,10 @@
 import React, {useMemo, useReducer, useContext} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from "axios";
+
 //IMPORT REDUCER, INITIAL STATE AND ACTION TYPES
 import reducer, {initialState, LOGGED_IN, LOGGED_OUT} from "../reducers/AuthReducer";
+
 // CONFIG KEYS [Storage Keys]===================================
 export const TOKEN_KEY = 'token';
 export const USER_KEY = 'user';
@@ -12,20 +14,20 @@ export const keys = [TOKEN_KEY, USER_KEY];
 const AuthContext = React.createContext();
 
 function AuthProvider(props) {
-    const [state, dispatch] = useReducer(reducer, initialState || {});
+    const [state, dispatch] = useReducer(reducer, initialState || {isLoggedIn:false});
 
     // Get Auth state
     const getAuthState = async () => {
         try {
             //GET TOKEN && USER
-            let token = await AsyncStorage.getItem(TOKEN_KEY);
+            let accessToken = await AsyncStorage.getItem(TOKEN_KEY);
             let user = await AsyncStorage.getItem(USER_KEY);
             user = JSON.parse(user);
             
-            if (token !== null && user!== null) await handleLogin({token, user});
+            if (accessToken !== null && user!== null) await handleLogin({accessToken, user});
             else await handleLogout();
 
-            return {token, user};
+            return {accessToken, user};
         } catch (error) {
             throw new Error(error)
         }
@@ -35,15 +37,15 @@ function AuthProvider(props) {
     const handleLogin = async (data) => {
         try{
             //STORE DATA
-            let {token, user} = data;
-            let data_ = [[USER_KEY, JSON.stringify(user)], [TOKEN_KEY, token]];
+            let {accessToken, user} = data;
+            let data_ = [[USER_KEY, JSON.stringify(user)], [TOKEN_KEY, accessToken]];
             await AsyncStorage.multiSet(data_);
 
             //AXIOS AUTHORIZATION HEADER
-            axios.defaults.headers.common["Authorization"] = `Bearer ${data.token}`;
+            axios.defaults.headers.common["Authorization"] = `Bearer ${data.accessToken}`;
 
             //DISPATCH TO REDUCER
-            dispatch({type: LOGGED_IN, user:data.user});
+            dispatch({type: LOGGED_IN, user: data.user});
         }catch (error) {
             throw new Error(error);
         }
