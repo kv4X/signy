@@ -30,7 +30,7 @@ export const TextToASL = ({ navigation }) => {
       <TopNavigation
         accessoryLeft={renderHomeAction}
         alignment='start'
-        title={props => <Text style={{color: colors['background-basic-color-1'], textTransform: "uppercase"}}>Speech to ASL converter</Text>}
+        title={props => <Text style={{color: colors['background-basic-color-1'], textTransform: "uppercase"}}>Text to ASL converter</Text>}
         style={{ position: 'absolute', backgroundColor: 'transparent', textTransform: 'uppercase' }}
       />
       <Layout style={{flex: 1, marginTop:5,marginHorizontal:15,justifyContent: 'center', alignItems: 'center'}}>
