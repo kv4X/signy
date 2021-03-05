@@ -1,5 +1,5 @@
 import React, {useState, useEffect, Component} from 'react';
-import { StatusBar, ImageBackground, SafeAreaView, View, Image, StyleSheet,TouchableHighlight, ScrollView } from 'react-native';
+import { StatusBar, ImageBackground, SafeAreaView, View, Image, StyleSheet,TouchableHighlight, ScrollView, TouchableOpacity } from 'react-native';
 import { NavigationContainer, DrawerActions } from '@react-navigation/native';
 import { Button, Text, TopNavigationAction, Divider, Icon, Card, Layout, TopNavigation, useTheme, Menu, MenuItem } from '@ui-kitten/components';
 import Svg, { SvgText, Path } from 'react-native-svg';
@@ -13,6 +13,60 @@ export const SpeechToTextScreen = ({ navigation }) => {
   const [started, setStarted] = useState('');
   const [results, setResults] = useState([]);
   const [partialResults, setPartialResults] = useState([]);
+  const [inputText,setInputText] = React.useState('');
+  const [image,setImage] = React.useState(require('../images/letter_icons/a.png'));
+  const images={
+    "a": require("../images/letter_icons/a.png"),
+"b": require("../images/letter_icons/b.png"),
+"c": require("../images/letter_icons/c.png"),
+"d": require("../images/letter_icons/d.png"),
+"e": require("../images/letter_icons/e.png"),
+"f": require("../images/letter_icons/f.png"),
+"g": require("../images/letter_icons/g.png"),
+"h": require("../images/letter_icons/h.png"),
+"i": require("../images/letter_icons/i.png"),
+"j": require("../images/letter_icons/j.png"),
+"k": require("../images/letter_icons/k.png"),
+"l": require("../images/letter_icons/l.png"),
+"m": require("../images/letter_icons/m.png"),
+"n": require("../images/letter_icons/n.png"),
+"o": require("../images/letter_icons/o.png"),
+"p": require("../images/letter_icons/p.png"),
+"q": require("../images/letter_icons/q.png"),
+"r": require("../images/letter_icons/r.png"),
+"s": require("../images/letter_icons/s.png"),
+"t": require("../images/letter_icons/t.png"),
+"u": require("../images/letter_icons/u.png"),
+"v": require("../images/letter_icons/v.png"),
+"w": require("../images/letter_icons/w.png"),
+"x": require("../images/letter_icons/x.png"),
+"y": require("../images/letter_icons/y.png"),
+"z": require("../images/letter_icons/z.png"),
+"1": require("../images/letter_icons/1.png"),
+"2": require("../images/letter_icons/2.png"),
+"3": require("../images/letter_icons/3.png"),
+"4": require("../images/letter_icons/4.png"),
+"5": require("../images/letter_icons/5.png"),
+"6": require("../images/letter_icons/6.png"),
+"7": require("../images/letter_icons/7.png"),
+"8": require("../images/letter_icons/8.png"),
+"9": require("../images/letter_icons/9.png")
+  }
+  function renderTranslate(){
+    inputText.split("").forEach((character,i) => {
+      setTimeout(() => {
+        showLetter(character);
+      }, i * 500);
+    });
+  }
+
+  function showLetter(slovo){
+      slovo = slovo.toLowerCase();
+      if (slovo.match(/^[0-9a-z]+$/)){
+        console.log(slovo)
+        setImage(images[slovo]);
+      }
+  };
 
   useEffect(() => {
     Voice.onSpeechStart = onSpeechStart;
@@ -42,6 +96,7 @@ export const SpeechToTextScreen = ({ navigation }) => {
 
   const onSpeechResults = (e) => {
     setResults(e.value);
+    setInputText(e.value[0]);
   };
 
   const onSpeechPartialResults = (e) => {
@@ -124,16 +179,18 @@ export const SpeechToTextScreen = ({ navigation }) => {
       />
       <Layout style={{flex: 1, marginTop:5,marginHorizontal:15,justifyContent: 'center', alignItems: 'center'}}>
         <View style={{ alignSelf:'stretch', height: 250,justifyContent: 'center', alignItems: 'center', backgroundColor:'#191919'}}>
-          <Image
-            style={{resizeMode: 'stretch', width: 200, height: 200, position:'absolute', top:10}}
-            source={{
-              uri: 'https://i.imgur.com/ZljNPkv.png',
-            }}
+        <TouchableOpacity 
+            style={{resizeMode: 'stretch', width: 200, height: 200, position:'absolute', top:10}} onPress={renderTranslate}
+>
+<Image
+            style={{resizeMode: 'stretch', width: 200, height: 200, position:'absolute'}}
+            source={image}
           />
+          </TouchableOpacity>
           <Text style={{position:'absolute', top:220,
     textAlign: 'center',
     fontWeight: 'bold'}}>
-            Press on icon to restart animation
+            Press on icon to start animation
           </Text>
         </View>
       
@@ -141,25 +198,19 @@ export const SpeechToTextScreen = ({ navigation }) => {
         <Text style={{   fontSize: 22,
     textAlign: 'center',
     fontWeight: 'bold',}}>
-          Results
+          Resolved audio
         </Text>
-        <ScrollView style={{marginBottom: 42}}>
-          {results.map((result, index) => {
-            return (
-              <Text
-                key={`result-${index}`}
-                style={styles.textStyle}>
-                {result}
-              </Text>
-            );
-          })}
-        </ScrollView>
+        <View>
+          <Text>
+            {results[0]}
+          </Text>
+        </View>
         <View style={styles.horizontalView}>
           <TouchableHighlight
             onPress={startRecognizing}
             style={styles.buttonStyle}>
             <Text style={styles.buttonTextStyle}>
-              Start
+              Record
             </Text>
           </TouchableHighlight>
           <TouchableHighlight
