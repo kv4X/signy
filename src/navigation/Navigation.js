@@ -6,6 +6,7 @@ import { SigninScreen } from '../screens/auth/SigninScreen';
 import { SignUpScreen } from '../screens/auth/SignUpScreen';
 import { ChangePasswordScreen } from '../screens/ChangePasswordScreen';
 import { SpeechToTextScreen } from '../screens/SpeechToTextScreen';
+import { ChangeProfileScreen } from '../screens/ChangeProfileScreen';
 const { Navigator, Screen } = createStackNavigator();
 import AuthProvider from "../providers/AuthProvider";
 import { useAuth } from "../providers/AuthProvider";
@@ -16,6 +17,7 @@ export const MainNavigator = () => (
     <Screen name='Home' component={DrawerNavigator}/>
     <Screen name='LearningSectionScreen' component={DrawerNavigator}/>
     <Screen name="SpeechtoTextScreen" component={DrawerNavigator}/>
+    <Screen name="UpdateProfile" component={ChangeProfileScreen}/>
     <Screen name="ChangePassword" component={ChangePasswordScreen}/>
     <Screen name="Settings" component={DrawerNavigator}/>
   </Navigator>

@@ -2,6 +2,9 @@ import React, {useState, useEffect} from 'react';
 import { StatusBar, ImageBackground, SafeAreaView, ScrollView, View, Image, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import { Button, Spinner, Text, Input, TopNavigationAction, Divider, Icon, Layout, TopNavigation, useTheme } from '@ui-kitten/components';
 import Svg, { SvgText, Path } from 'react-native-svg';
+import Toast from 'react-native-toast-message';
+import * as api from "../services/UserService";
+import { useAuth } from "../providers/AuthProvider";
 
 const AlertIcon = (props) => (
   <Icon {...props} name='alert-circle-outline'/>
@@ -35,9 +38,9 @@ export const ChangePasswordScreen = ({ navigation }) => {
   const [newPassword, setNewPassword] = React.useState('');
   const [confirmNewPassword, setConfirmNewPassword] = React.useState('');
 
-  const [showPasswordCaption , setShowPasswordCaption] = React.useState(false);
-  const [showNewPasswordCaption , setShowNewPasswordCaption] = React.useState(false);
-  const [showConfirmPasswordCaption , setShowConfirmNewPasswordCaption] = React.useState(false);
+  const [passwordCaption , setPasswordCaption] = React.useState('');
+  const [newPasswordCaption , setNewPasswordCaption] = React.useState('');
+  const [confirmNewPasswordCaption , setConfirmNewPasswordCaption] = React.useState('');
 
   const toggleSecureEntry = () => {
     setSecurePasswordEntry(!securePasswordEntry);
@@ -46,19 +49,67 @@ export const ChangePasswordScreen = ({ navigation }) => {
   /* LOGIN HANDLER */
   const [loading, setLoading] = React.useState('');
 
-  const handler = () => {
-    setLoading(true);
-    if(currentPassword.length == 0) setShowPasswordCaption(true);
-    if(newPassword.length == 0) setShowNewPasswordCaption(true);
-    if(confirmNewPassword.length == 0) setShowConfirmNewPasswordCaption(true);
-    //    navigation.navigate("Dashboard");
-  };
+  async function changePasswordHandler(){
+    try{
+      setPasswordCaption('');
+      setNewPasswordCaption('');
+      setConfirmNewPasswordCaption('');
+      setLoading(true);
+      let response =  await api.changePassword(
+        {
+          currentPassword: currentPassword,
+          password: newPassword,
+          password_confirmation: confirmNewPassword
+        }
+      );
+      
+      if(response.message == "PASSWORD_UPDATED"){
+        Toast.show({
+          type: 'success',
+          text1: 'Successed', 
+          text2: 'Password changed!',
+          visibilityTime: 5000,
+        });
+      }
+    }catch(error){
+      if(error.message == "VALIDATION_ERROR"){
+        Object.entries(error.data.errors).forEach(([key, value]) => {
+          //console.log(`${key} ${value}`);
+          if(key == "currentPassword") setPasswordCaption(value);
+          if(key == "password") setNewPasswordCaption(value);
+        });
+      }else if(error.message == "CURRENT_PASSWORD_INCORRECT"){
+        Toast.show({
+          type: 'error',
+          text1: 'Change password error',
+          text2: 'Current password is incorrect.',
+          visibilityTime: 5000,
+        });
+      }else if(error.message == "ERROR"){
+        Toast.show({
+          type: 'error',
+          text1: 'ERROR',
+          text2: 'Unknown error!',
+          visibilityTime: 5000,
+        });
+      }else if(error.message == "UNAUTHORIZED"){
+        Toast.show({
+          type: 'error',
+          text1: 'ERROR',
+          text2: 'Please login again!',
+          visibilityTime: 5000,
+        });
+      }
+    }
+    setLoading(false);
+  }
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors['background-basic-color-1'] }}>
       <Svg width="500" height="150" xmlns="http://www.w3.org/2000/svg" viewBox="250 320 550 450">
         <Path fill={colors['color-primary-default']} fill-opacity="0.5" d="M463.158,0.547 C528.839,2.315 588.950,12.214 653.427,40.697 C717.061,68.326 785.061,114.539 846.834,169.015 C972.289,279.777 1064.908,415.922 1017.305,469.359 C997.219,500.074 951.351,514.229 903.358,533.127 C854.559,551.158 803.634,573.933 754.757,601.879 C656.754,656.860 565.351,732.675 448.402,748.791 C333.158,766.828 218.637,725.566 135.519,656.965 C51.993,587.778 -0.130,491.251 -0.011,385.187 C-0.930,171.842 209.381,2.560 463.158,0.547"/>
       </Svg>
+      <Toast ref={(ref) => Toast.setRef(ref)} />
       <TopNavigation
         accessoryLeft={BackAction}
         alignment='start'
@@ -74,8 +125,8 @@ export const ChangePasswordScreen = ({ navigation }) => {
             accessoryRight={renderPasswordIcon}
             secureTextEntry={securePasswordEntry}
             onChangeText={nextValue => setCurrentPassword(nextValue)}
-            captionIcon={showPasswordCaption ? AlertIcon: null}
-            caption={showPasswordCaption ? 'Please enter current password': null}
+            captionIcon={newPasswordCaption.length ? AlertIcon: null}
+            caption={passwordCaption.length ? passwordCaption: null}
           />
           <Input
             value={newPassword}
@@ -84,8 +135,8 @@ export const ChangePasswordScreen = ({ navigation }) => {
             accessoryRight={renderPasswordIcon}
             secureTextEntry={securePasswordEntry}
             onChangeText={nextValue => setNewPassword(nextValue)}
-            captionIcon={showNewPasswordCaption ? AlertIcon: null}
-            caption={showNewPasswordCaption ? 'Please enter new password': null}
+            captionIcon={newPasswordCaption.length ? AlertIcon: null}
+            caption={newPasswordCaption.length ? newPasswordCaption: null}
           />
           <Input
             value={confirmNewPassword}
@@ -94,12 +145,12 @@ export const ChangePasswordScreen = ({ navigation }) => {
             accessoryRight={renderPasswordIcon}
             secureTextEntry={securePasswordEntry}
             onChangeText={nextValue => setConfirmNewPassword(nextValue)}
-            captionIcon={showConfirmPasswordCaption ? AlertIcon: null}
-            caption={showConfirmPasswordCaption ? 'Please enter cofirmation password': null}
+            captionIcon={confirmNewPasswordCaption ? AlertIcon: null}
+            caption={confirmNewPasswordCaption ? confirmNewPasswordCaption: null}
           />
         </Layout>
         <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingLeft: 20, paddingRight: 20}}>
-          <Button style={{ marginTop: 10, width: '100%'}} status='primary' accessoryLeft={loading ? null : SaveIcon} onPress={handler}>
+          <Button style={{ marginTop: 10, width: '100%'}} status='primary' accessoryLeft={loading ? null : SaveIcon} onPress={changePasswordHandler}>
             {loading ? <Spinner status='basic'/> : "Save"} 
           </Button>
         </Layout>

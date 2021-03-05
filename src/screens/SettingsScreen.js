@@ -42,7 +42,7 @@ export const SettingsScreen = ({ navigation }) => {
           <MenuItem
             title='Edit profile'
             accessoryRight={ForwardIcon}
-            onPress={() => navigation.navigate("ChangePassword")}
+            onPress={() => navigation.navigate("UpdateProfile")}
           />
           <MenuItem
             title='Change password'

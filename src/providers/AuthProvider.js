@@ -42,8 +42,8 @@ function AuthProvider(props) {
             await AsyncStorage.multiSet(data_);
 
             //AXIOS AUTHORIZATION HEADER
-            axios.defaults.headers.common["Authorization"] = `Bearer ${data.accessToken}`;
-
+            //axios.defaults.headers.common["Authorization"] = `Bearer ${data.accessToken}`;
+            axios.defaults.headers.common["x-access-token"] = data.accessToken;
             //DISPATCH TO REDUCER
             dispatch({type: LOGGED_IN, user: data.user});
         }catch (error) {
