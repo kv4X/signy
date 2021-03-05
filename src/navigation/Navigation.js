@@ -7,6 +7,7 @@ import { SignUpScreen } from '../screens/auth/SignUpScreen';
 import { ChangePasswordScreen } from '../screens/ChangePasswordScreen';
 import { SpeechToTextScreen } from '../screens/SpeechToTextScreen';
 import { ChangeProfileScreen } from '../screens/ChangeProfileScreen';
+import { AuthLoadingScreen } from '../screens/auth/AuthLoadingScreen';
 const { Navigator, Screen } = createStackNavigator();
 import AuthProvider from "../providers/AuthProvider";
 import { useAuth } from "../providers/AuthProvider";
@@ -24,10 +25,11 @@ export const MainNavigator = () => (
 );
 
 export const AuthNavigator = () => (
-  <Navigator headerMode='none' initialRouteName="SignIn">
+  <Navigator headerMode='none' initialRouteName="Loading">
     {/*<Screen name='SignIn' component={DrawerNavigator}/>*/}
     <Screen name='SignIn' component={SigninScreen}/>
     <Screen name='SignUp' component={SignUpScreen}/>
+    <Screen name='Loading' component={AuthLoadingScreen}/>
   </Navigator>
 );
 
